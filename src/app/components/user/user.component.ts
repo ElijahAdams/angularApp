@@ -15,17 +15,7 @@ export class UserComponent {
   }
 
   ngOnInit() {
-    this.user = {
-      firstName : 'Eli',
-      lastName : 'adams',
-      age : 25,
-      address : {
-        street : '6414 stanton drive',
-        city : 'charlotte',
-        state : 'NC'
-      }
 
-    }
   }
 
 
