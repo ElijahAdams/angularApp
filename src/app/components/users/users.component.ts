@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {User} from '../../models/User';
+import {DataService} from '../../services/data.service';
+
 
 @Component({
   selector: 'app-users',
@@ -14,44 +16,26 @@ export class UsersComponent implements OnInit {
   }
   users: User [];
   loaded: boolean = false;
-  enabledAdd: boolean = false;
   showUserForm: boolean = false;
   @ViewChild('userForm') form: any;
+  data:any;
 
-  constructor() {
-    //for injecting services etc.
+  constructor(private dataService:DataService) {
+
   }
 
   ngOnInit() {
     //Use to when doing calls like http/ajax
 
-      this.users = [
-        {
-          firstName : 'Eli',
-          lastName : 'adams',
-          email: 'a@a.com',
-          isActive: true,
-          registered: new Date('01/02/2018 08:30:00'),
-          hide: true
-        },
-        {
-          firstName : 'Paula',
-          lastName : 'Adams',
-          email: 'a@a.com',
-          isActive:false,
-          registered: new Date('01/30/2011 12:30:26'),
-          hide: true
-        },
-        {
-          firstName : 'charlotte',
-          lastName : 'Adams',
-          email: 'a@a.com',
-          isActive:false,
-          registered: new Date('05/02/2023 08:15:00'),
-          hide: true
-        }
-      ];
-      this.loaded = true;
+      this.dataService.getData().subscribe(data => {
+        console.log(data);
+      });
+
+      this.dataService.getUsers().subscribe( users => {
+          this.users = users;
+          this.loaded = true;
+      });
+
 
   }
 
@@ -61,7 +45,7 @@ export class UsersComponent implements OnInit {
     } else {
       value.isActive = true;
       value.registered = new Date();
-      this.users.unshift(value);
+      this.dataService.addUser(value);
       this.form.reset();
       this.showUserForm = false;
     }
