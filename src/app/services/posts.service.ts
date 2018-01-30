@@ -22,4 +22,10 @@ export class PostsService {
   savePost(post : Post) : Observable<Post> {
     return this.httpClient.post<Post>(this.postsUrl, post, httpOptions);
   }
+
+  updatePost(post: Post) : Observable<Post> {
+    const url =`${this.postsUrl}/${post.id}`;
+    return this.httpClient.put<Post>(url, post, httpOptions);
+
+  }
 }
