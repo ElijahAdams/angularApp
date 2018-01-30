@@ -15,6 +15,7 @@ export class PostsComponent implements OnInit {
     body: ''
 
   }
+
   isEdit: boolean = false;
   constructor(private ps:PostsService) { }
 
@@ -48,6 +49,19 @@ export class PostsComponent implements OnInit {
         }
       }
     })
+  }
+
+  removePost(post: Post){
+    if(confirm('Are you sure you want to delete (' + post.title + ')')) {
+      this.ps.removePost(post.id).subscribe(() => {
+        this.posts.forEach((cur, index) => {
+          if(post.id === cur.id){
+            this.posts.splice(index, 1);
+          }
+        })
+
+      })
+    }
   }
 
 }
